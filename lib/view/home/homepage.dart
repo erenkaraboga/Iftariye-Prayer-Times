@@ -23,109 +23,138 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.green,
         ),
         body: Obx(
-          () => Row(
-            children: [
-              DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  isExpanded: false,
-                  hint: Text(
-                    'Select Item',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Theme.of(context).hintColor,
-                    ),
-                  ),
-                  items: homeController.countries.value
-                      .map((item) => DropdownMenuItem<String>(
-
-                            value: item,
-                            
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  value: homeController.selectedValueCountry.value ==""?null:homeController.selectedValueCountry.value,
-                  
-                  onChanged: (valuee) {
-                    homeController.selectedValueCountry.value =
-                        valuee as String;
-                    homeController
-                        .getTowns(homeController.selectedValueCountry.value);
-                  },
-                  buttonHeight: 40,
-                  buttonWidth: 150,
-                  itemHeight: 40,
-                  dropdownMaxHeight: 200,
-                  searchController: searchController,
-                  searchInnerWidget: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 8,
-                      bottom: 4,
-                      right: 8,
-                      left: 8,
-                    ),
-                    child: TextFormField(
-                      controller: searchController,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
-                        ),
-                        hintText: 'Search for an item...',
-                        hintStyle: const TextStyle(fontSize: 12),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+          () => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                DropdownButtonHideUnderline(
+                  child: DropdownButton2(
+                    buttonPadding: const EdgeInsets.all(20),
+                    buttonDecoration: BoxDecoration(
+                        border: Border.all(color: Colors.green, width: 1.5),
+                        borderRadius: BorderRadius.circular(15)),
+                    isExpanded: false,
+                    hint: Text(
+                      'Select Item',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context).hintColor,
                       ),
                     ),
-                  ),
-                  searchMatchFn: (item, searchValue) {
-                    return (item.value.toString().contains(searchValue));
-                  },
-                  //This to clear the search value when you close the menu
-                  onMenuStateChange: (isOpen) {
-                    if (!isOpen) {
-                      searchController.clear();
-                    }
-                  },
-                ),
-              ),
-              DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  hint: Text(
-                    'İlçe Seçiniz',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Theme.of(context).hintColor,
-                    ),
-                  ),
-                  items: homeController.towns.value
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
+                    items: homeController.countries.value
+                        .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal),
                               ),
-                            ),
-                          ))
-                      .toList(),
-                  value: homeController.selectedValueTown.value ==""?null:homeController.selectedValueTown.value,
-                  onChanged: (value) {
-                    homeController.selectedValueTown.value = value as String;
-                  },
-                  buttonHeight: 40,
-                  buttonWidth: 140,
-                  itemHeight: 40,
+                            ))
+                        .toList(),
+                    value: homeController.selectedValueCountry.value,
+                    onChanged: (valuee) {
+                      homeController.selectedValueTown.value = "Seçiniz";
+                      homeController.selectedValueCountry.value =
+                          valuee as String;
+                      homeController
+                          .getTowns(homeController.selectedValueCountry.value);
+                    },
+                    buttonHeight: 60,
+                    buttonWidth: 180,
+                    itemHeight: 60,
+                    dropdownDirection: DropdownDirection.left,
+                    dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    dropdownMaxHeight: 300,
+                    searchController: searchController,
+                    searchInnerWidget: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 20,
+                        bottom: 4,
+                        right: 8,
+                        left: 8,
+                      ),
+                      child: searchCountry(),
+                    ),
+                    searchMatchFn: (item, searchValue) {
+                      return (item.value.toString().contains(searchValue));
+                    },
+                    onMenuStateChange: (isOpen) {
+                      if (!isOpen) {
+                        searchController.clear();
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(
+                  width: 10,
+                ),
+                DropdownButtonHideUnderline(
+                  child: DropdownButton2(
+                    buttonPadding: const EdgeInsets.all(20),
+                    buttonDecoration: BoxDecoration(
+                        border: Border.all(
+                            width: 1.5,
+                            color: Colors.green,
+                            strokeAlign: StrokeAlign.center),
+                        borderRadius: BorderRadius.circular(15)),
+                    hint: Text(
+                      'İlçe Seçiniz',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context).hintColor,
+                      ),
+                    ),
+                    items: homeController.towns.value
+                        .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ))
+                        .toList(),
+                    value: homeController.selectedValueTown.value,
+                    onChanged: (value) {
+                      homeController.selectedValueTown.value = value as String;
+                    },
+                    dropdownDirection: DropdownDirection.textDirection,
+                    dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    dropdownMaxHeight: 300,
+                    buttonHeight: 60,
+                    buttonWidth: 180,
+                    itemHeight: 60,
+                  ),
+                ),
+              ],
+            ),
           ),
         ));
+  }
+
+  TextFormField searchCountry() {
+    return TextFormField(
+      controller: searchController,
+      decoration: InputDecoration(
+        isDense: true,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 8,
+        ),
+        hintText: "İl Ara",
+        hintStyle: const TextStyle(fontSize: 12),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    );
   }
 }

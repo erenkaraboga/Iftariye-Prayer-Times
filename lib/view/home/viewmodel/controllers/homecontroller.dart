@@ -6,8 +6,8 @@ class HomeController extends GetxController {
   var countries = <String>[].obs;
   var towns= <String>[].obs;
   
-  var selectedValueCountry = "".obs;
-  var selectedValueTown = "".obs;
+  var selectedValueCountry = "Seçiniz".obs;
+  var selectedValueTown = "Seçiniz".obs;
   HomeController(this.service);
 
   @override
@@ -18,11 +18,13 @@ class HomeController extends GetxController {
 
   getCities() async {
     var list = await service.getCities();
+    list.add("Seçiniz");
     countries.value = list;
   }
 
   getTowns(String country) async {
     var list = await service.getTowns(country);
+    list.add("Seçiniz");
     towns.value=list;
   }
 }
