@@ -23,4 +23,11 @@ class HomeService extends IHomeService {
     var newData = List<String>.from(json.decode(jsonString));
     return newData;
   }
+  
+  @override
+  getTimes(String country ,String town) async{
+    var response = await dio.get(AppConstants.getTimes(country, town));
+    return response.data.toString();
+
+  }
 }
