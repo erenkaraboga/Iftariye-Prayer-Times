@@ -1,11 +1,15 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iftariye_v2/core/constants/asset_paths.dart';
+import 'package:iftariye_v2/core/constants/base/app_text.dart';
+import 'package:iftariye_v2/view/home/homepage.dart';
 import 'package:iftariye_v2/view/home/viewmodel/service/IHome.dart';
 import 'package:iftariye_v2/view/home/viewmodel/service/data/stroage.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:intl/intl.dart';
 import 'package:is_first_run/is_first_run.dart';
 
 class HomeController extends GetxController {
@@ -17,7 +21,10 @@ class HomeController extends GetxController {
   var backImageUrl = "".obs;
   var selectedValueCountry = "İl Seçiniz".obs;
   var selectedValueTown = " İlçe Seçiniz".obs;
-
+  var datetimes = <int>[].obs;
+  var countDate = <int>[].obs;
+  var timeIndex = 0.obs;
+  var timeName = "Kalan Süre".obs;
   var timeData = <String>[
     "          ",
     "          ",
@@ -30,12 +37,13 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
-   bool firstRun = await IsFirstRun.isFirstRun();
-   if(firstRun){
-    print("first run");
-    await getCities();
-   }
     checkImageChange();
+    bool firstRun = await IsFirstRun.isFirstRun();
+    if (firstRun) {
+      print("first run");
+      await getCities();
+    }
+
     listenConnection();
     super.onInit();
   }
@@ -62,7 +70,7 @@ class HomeController extends GetxController {
     var response = await service.getTimes(
         selectedValueCountry.value, selectedValueTown.value);
     timeData.value = response;
-    inspect(timeData.value);
+    dateformatter(timeData);
   }
 
   saveValue() {
@@ -72,17 +80,16 @@ class HomeController extends GetxController {
   }
 
   checkImageChange() {
-    print(DateTime.now());
     var time = DateTime.now().hour;
     if (time >= 4 && time <= 12) {
       backImageUrl.value = AssetPaths.morning;
-      message.value = "Hayırlı Sabahlar";
-    } else if (time >= 12 && time <= 17) {
+      message.value = AppTexts.morning;
+    } else if (time > 12 && time <= 17) {
       backImageUrl.value = AssetPaths.afternoon;
-      message.value = "Hayırlı Öğlenler";
+      message.value = AppTexts.afternoon;
     } else {
       backImageUrl.value = AssetPaths.evening;
-      message.value = "Hayırlı Geceler";
+      message.value = AppTexts.evening;
     }
   }
 
@@ -90,11 +97,12 @@ class HomeController extends GetxController {
     var listener = InternetConnectionChecker.createInstance(
             checkTimeout: const Duration(seconds: 2))
         .onStatusChange
-        .listen((status) {
+        .listen((status) async {
       switch (status) {
         case InternetConnectionStatus.connected:
           Get.closeCurrentSnackbar();
-          buildApp();
+          await buildApp();
+
           break;
         case InternetConnectionStatus.disconnected:
           showSnack();
@@ -104,6 +112,56 @@ class HomeController extends GetxController {
     });
   }
 
+  dateformatter(List<String> times) {
+    List<int> list = [];
+    List<int> list2 = [];
+    for (var element in times) {
+      final DateFormat formatter = DateFormat('yyyy-MM-dd');
+      final String date = formatter.format(DateTime.now());
+      DateTime tempDate =
+          DateFormat("yyyy-MM-dd hh:mm").parse("$date $element");
+
+      var diff = tempDate.difference(DateTime.now()).inMilliseconds;
+      list.add(diff);
+      list2.add(diff);
+    }
+    datetimes.value = list;
+    inspect(datetimes.value);
+    countDate.value = list2;
+    findTime();
+  }
+
+  findTime() {
+    countDate.value.removeWhere((element) => element < 0);
+    countDate.value.sort();
+    var current = countDate.value.first;
+    countDate.value.remove(current);
+    var timeName = datetimes.indexOf(current);
+
+     timeIndex.value=timeName;
+     bindName();
+  
+  }
+  bindName(){
+    if(timeIndex.value==0){
+      timeName.value="İmsak'a Kalan Süre";
+    }
+    else if(timeIndex.value==1){
+       timeName.value="Sabah'a Kalan Süre";
+    }
+    else if(timeIndex.value==2){
+       timeName.value="Öğlen'e Kalan Süre";
+    }
+    else if(timeIndex.value==3){
+       timeName.value="İkindi'ye Kalan Süre";
+    }
+    else if(timeIndex.value==4){
+       timeName.value="İftar'a Kalan Süre";
+    }
+    else if(timeIndex.value==5){
+       timeName.value="Yatsı'ya Kalan Süre";
+    }
+  }
   showSnack() {
     return Get.showSnackbar(
       const GetSnackBar(

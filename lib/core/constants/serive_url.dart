@@ -6,7 +6,7 @@ class ServiceUrl {
     return "https://iftariyeapi.vercel.app/api/cities?country=Turkey&region=$country";
   }
 
-  static String getTimes(String country, String town) {
-    return "https://iftariyeapi.vercel.app/api/timesFromPlace?days=1&region=$country&country=Turkey&timezoneOffset=180&city=$town";
+  static String getTimes(String country, String town,String date) {
+    return "https://iftariyeapi.vercel.app/api/timesFromPlace?days=1&region=$country&country=Turkey&timezoneOffset=180&city=$town&date=$date";
   }
 }

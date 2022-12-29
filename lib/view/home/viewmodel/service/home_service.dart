@@ -28,16 +28,18 @@ class HomeService extends IHomeService {
 
   @override
   getTimes(String country, String town) async {
-    var response = await dio.get(ServiceUrl.getTimes(country, town));
+   var now =  DateTime.now();
+    var formatter =  DateFormat('yyyy-MM-dd');
+    String formattedDate = formatter.format(now);
+    var response = await dio.get(ServiceUrl.getTimes(country, town,formattedDate));
      Map<String, dynamic> jsonMap = jsonDecode(response.toString());
     Map<String, dynamic> timesData = jsonMap['times'];
     Times times = Times(
       dates: Map.from(timesData)
           .map((date, times) => MapEntry(date, List.from(times))),
     );
-    var now =  DateTime.now();
-    var formatter =  DateFormat('yyyy-MM-dd');
-    String formattedDate = formatter.format(now);
+    
+    inspect(times.dates);
     return times.dates![formattedDate]!;
   }
 }

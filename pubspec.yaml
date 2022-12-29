@@ -45,6 +45,11 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   intl: ^0.18.0
   is_first_run: ^1.0.0
+  font_awesome_flutter: ^10.3.0
+  flutter_svg: ^1.1.6
+  lottie: ^2.1.0
+  flutter_countdown_timer: ^4.1.0
+  slide_countdown: ^0.4.0
 
 dev_dependencies:
   flutter_test:
@@ -66,7 +71,10 @@ flutter:
   assets:
     - assets/images/evening.png
     - assets/images/afternoon.png
-    - assets/images/afternoon.png
+    - assets/images/morning.png
+    - assets/images/splash.json
+    - assets/images/ramadan.json
+    - assets/icons/
 
 
   # To add custom fonts to your application, add a fonts section here,
