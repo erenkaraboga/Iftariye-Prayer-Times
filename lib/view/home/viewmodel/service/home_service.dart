@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:diacritic/diacritic.dart';
 import 'package:dio/dio.dart';
 import 'package:iftariye_v2/core/constants/serive_url.dart';
 import 'package:intl/intl.dart';
+import 'package:turkish/turkish.dart';
 
 import '../../../model/CountryResponseModel.dart';
 import 'IHome.dart';
@@ -15,6 +17,8 @@ class HomeService extends IHomeService {
     var response = await dio.get(ServiceUrl.countryUrl);
     var jsonString = json.encode(response.data);
     var newData = List<String>.from(json.decode(jsonString));
+   
+    newData.sort((a, b) => a.toLowerCase().compareToTr(b.toLowerCase()));
     return newData;
   }
 

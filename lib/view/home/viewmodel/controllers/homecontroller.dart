@@ -1,11 +1,7 @@
-import 'dart:developer';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iftariye_v2/core/constants/asset_paths.dart';
 import 'package:iftariye_v2/core/constants/base/app_text.dart';
-import 'package:iftariye_v2/view/home/homepage.dart';
 import 'package:iftariye_v2/view/home/viewmodel/service/IHome.dart';
 import 'package:iftariye_v2/view/home/viewmodel/service/data/stroage.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -119,14 +115,14 @@ class HomeController extends GetxController {
       final DateFormat formatter = DateFormat('yyyy-MM-dd');
       final String date = formatter.format(DateTime.now());
       DateTime tempDate =
-          DateFormat("yyyy-MM-dd hh:mm").parse("$date $element");
+          DateFormat("yyyy-MM-dd HH:mm").parse("$date $element");
+      print(tempDate);
 
-      var diff = tempDate.difference(DateTime.now()).inMilliseconds;
+      var diff = tempDate.difference(DateTime.now().toUtc()).inMilliseconds;
       list.add(diff);
       list2.add(diff);
     }
     datetimes.value = list;
-    inspect(datetimes.value);
     countDate.value = list2;
     findTime();
   }
@@ -138,30 +134,26 @@ class HomeController extends GetxController {
     countDate.value.remove(current);
     var timeName = datetimes.indexOf(current);
 
-     timeIndex.value=timeName;
-     bindName();
-  
+    timeIndex.value = timeName;
+    bindName();
   }
-  bindName(){
-    if(timeIndex.value==0){
-      timeName.value="İmsak'a Kalan Süre";
-    }
-    else if(timeIndex.value==1){
-       timeName.value="Sabah'a Kalan Süre";
-    }
-    else if(timeIndex.value==2){
-       timeName.value="Öğlen'e Kalan Süre";
-    }
-    else if(timeIndex.value==3){
-       timeName.value="İkindi'ye Kalan Süre";
-    }
-    else if(timeIndex.value==4){
-       timeName.value="İftar'a Kalan Süre";
-    }
-    else if(timeIndex.value==5){
-       timeName.value="Yatsı'ya Kalan Süre";
+
+  bindName() {
+    if (timeIndex.value == 0) {
+      timeName.value = "İmsak'a Kalan Süre";
+    } else if (timeIndex.value == 1) {
+      timeName.value = "Sabah'a Kalan Süre";
+    } else if (timeIndex.value == 2) {
+      timeName.value = "Öğlen'e Kalan Süre";
+    } else if (timeIndex.value == 3) {
+      timeName.value = "İkindi'ye Kalan Süre";
+    } else if (timeIndex.value == 4) {
+      timeName.value = "İftar'a Kalan Süre";
+    } else if (timeIndex.value == 5) {
+      timeName.value = "Yatsı'ya Kalan Süre";
     }
   }
+
   showSnack() {
     return Get.showSnackbar(
       const GetSnackBar(
