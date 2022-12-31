@@ -76,6 +76,7 @@ flutter:
     - assets/images/morning.png
     - assets/images/splash.json
     - assets/images/ramadan.json
+    - assets/images/progress.json
     - assets/icons/
 
 

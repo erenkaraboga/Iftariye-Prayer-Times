@@ -19,6 +19,7 @@ class HomeController extends GetxController {
   var selectedValueTown = " İlçe Seçiniz".obs;
   var datetimes = <int>[].obs;
   var countDate = <int>[].obs;
+  var isloading=true.obs;
   var timeIndex = 0.obs;
   var timeName = "Kalan Süre".obs;
   var timeData = <String>[
@@ -34,8 +35,10 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     checkImageChange();
+     isloading.value=true;
     bool firstRun = await IsFirstRun.isFirstRun();
     if (firstRun) {
+      isloading.value=false;
       print("first run");
       await getCities();
     }
@@ -63,10 +66,13 @@ class HomeController extends GetxController {
   }
 
   getTimes() async {
+   
     var response = await service.getTimes(
         selectedValueCountry.value, selectedValueTown.value);
     timeData.value = response;
+    isloading.value=false;
     dateformatter(timeData);
+    
   }
 
   saveValue() {

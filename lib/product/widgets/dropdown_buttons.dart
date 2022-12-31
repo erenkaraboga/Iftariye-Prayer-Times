@@ -6,12 +6,12 @@ import '../../view/home/homepage.dart';
 
 dropCount() {
   return SizedBox(
-    height: Get.height/7.81,
-    width: Get.width/2.30909090909,
+    height: Get.height / 7.81,
+    width: Get.width / 2.30909090909,
     child: DropdownSearch<String>(
-      dropdownButtonProps:  DropdownButtonProps(
+      dropdownButtonProps: DropdownButtonProps(
         constraints: BoxConstraints(
-          maxHeight: Get.height/13.0166666667,
+          maxHeight: Get.height / 13.0166666667,
         ),
         color: Colors.black,
       ),
@@ -19,8 +19,18 @@ dropCount() {
         await homeController.getCities();
         return homeController.countries.value;
       },
-      popupProps:
-          const PopupProps.menu(showSelectedItems: true, showSearchBox: false),
+      popupProps: PopupProps.menu(
+        showSelectedItems: true,
+        showSearchBox: false,
+        itemBuilder: (context, item, isSelected) => Container(
+          padding: const EdgeInsets.all(15),
+          child: Text(
+            item.toString(),
+            style: const TextStyle(
+                color: Colors.black, fontSize: 15, fontFamily: "Schyler"),
+          ),
+        ),
+      ),
       dropdownDecoratorProps: const DropDownDecoratorProps(
         baseStyle: TextStyle(
             color: Colors.black,
@@ -45,12 +55,12 @@ dropCount() {
 
 dropTown(BuildContext context) {
   return SizedBox(
-    height: Get.height/7.81,
-    width:  Get.width/2.30909090909,
+    height: Get.height / 7.81,
+    width: Get.width / 2.30909090909,
     child: DropdownSearch<String>(
-      dropdownButtonProps:  DropdownButtonProps(
+      dropdownButtonProps: DropdownButtonProps(
         constraints: BoxConstraints(
-          maxHeight: Get.height/13.0166666667,
+          maxHeight: Get.height / 13.0166666667,
         ),
         color: Colors.black,
       ),
@@ -58,7 +68,16 @@ dropTown(BuildContext context) {
         await homeController.getTowns();
         return homeController.towns.value;
       },
-      popupProps: const PopupProps.menu(),
+      popupProps: PopupProps.menu(
+        itemBuilder: (context, item, isSelected) => Container(
+          padding: const EdgeInsets.all(15),
+          child: Text(
+            item.toString(),
+            style: const TextStyle(
+                color: Colors.black, fontSize: 15, fontFamily: "Schyler"),
+          ),
+        ),
+      ),
       dropdownDecoratorProps: const DropDownDecoratorProps(
         baseStyle: TextStyle(
             color: Colors.black,

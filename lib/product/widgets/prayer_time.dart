@@ -32,6 +32,13 @@ times() {
                       onDone: () {
                         homeController.findTime();
                       },
+                      replacement: const Text(
+                        "Vakit Girdi",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontFamily: "Schyler"),
+                      ),
                       decoration: BoxDecoration(
                           color: Colors.black.withAlpha(20),
                           borderRadius: BorderRadius.circular(10)),
@@ -59,44 +66,52 @@ times() {
         flex: 1,
       ),
       homeController.timeIndex.value == 1
-          ? body("Sabah", homeController.timeData.value[1], AssetPaths.imsak,
+          ? body("Sabah", homeController.timeData.value[1], AssetPaths.gunes,
               Colors.green)
-          : body("Sabah", homeController.timeData.value[1], AssetPaths.imsak,
+          : body("Sabah", homeController.timeData.value[1], AssetPaths.gunes,
               Colors.black45),
       const Spacer(
         flex: 1,
       ),
       homeController.timeIndex.value == 2
-          ? body("Öğle", homeController.timeData.value[2], AssetPaths.imsak,
+          ? body("Öğle", homeController.timeData.value[2], AssetPaths.ogle,
               Colors.green)
-          : body("Öğle", homeController.timeData.value[2], AssetPaths.imsak,
+          : body("Öğle", homeController.timeData.value[2], AssetPaths.ogle,
               Colors.black45),
       const Spacer(
         flex: 1,
       ),
       homeController.timeIndex.value == 3
-          ? body("İkindi", homeController.timeData.value[3], AssetPaths.imsak,
+          ? body("İkindi", homeController.timeData.value[3], AssetPaths.ikindi,
               Colors.green)
-          : body("İkindi", homeController.timeData.value[3], AssetPaths.imsak,
+          : body("İkindi", homeController.timeData.value[3], AssetPaths.ikindi,
               Colors.black45),
       const Spacer(
         flex: 1,
       ),
       homeController.timeIndex.value == 4
-          ? body("Akşam", homeController.timeData.value[4], AssetPaths.imsak,
+          ? body("Akşam", homeController.timeData.value[4], AssetPaths.aksam,
               Colors.green)
-          : body("Akşam", homeController.timeData.value[4], AssetPaths.imsak,
+          : body("Akşam", homeController.timeData.value[4], AssetPaths.aksam,
               Colors.black45),
       const Spacer(
         flex: 1,
       ),
-      homeController.timeIndex .value== 5
-          ? body("Yatsı", homeController.timeData.value[5], AssetPaths.imsak,
+      homeController.timeIndex.value == 5
+          ? body("Yatsı", homeController.timeData.value[5], AssetPaths.yatsi,
               Colors.green)
-          : body("Yatsı", homeController.timeData.value[5], AssetPaths.imsak,
+          : body("Yatsı", homeController.timeData.value[5], AssetPaths.yatsi,
               Colors.black45),
+      const Text(
+        "Powered by Eren KARABOGA darksoft",
+        style: TextStyle(
+            color: Colors.grey,
+            fontSize: 10,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w400),
+      ),
       const Spacer(
-        flex: 30,
+        flex: 26,
       ),
     ],
   );
