@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.iftariye_v2">
+    package="com.erenkaraboga.prayer7">
    <uses-permission android:name="android.permission.INTERNET"/>
    <application
    
-        android:label="iftariye_v2"
+        android:label="İftariye"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

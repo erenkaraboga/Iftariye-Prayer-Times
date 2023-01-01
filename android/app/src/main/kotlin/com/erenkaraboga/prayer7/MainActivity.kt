@@ -1,4 +1,4 @@
-package com.example.iftariye_v2
+package com.erenkaraboga.prayer7
 
 import io.flutter.embedding.android.FlutterActivity
 
