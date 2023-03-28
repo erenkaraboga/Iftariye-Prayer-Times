@@ -19,7 +19,22 @@ final TextEditingController searchController = TextEditingController();
 
 //392.72727272727275
 //781.0909090909091
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      homeController.buildApp();
+    }
+
+    super.didChangeAppLifecycleState(state);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +45,8 @@ class _HomePageState extends State<HomePage> {
                 prayerBoard(),
                 message(),
                 Positioned(
-                  left: Get.width / 4.35555555556,
-                  right: Get.width / 4.35555555556,
+                  left: Get.width / 4.3,
+                  right: Get.width / 4.3,
                   bottom: Get.width / 4.61176470588,
                   child: IntrinsicHeight(
                     child: Row(
@@ -41,6 +56,7 @@ class _HomePageState extends State<HomePage> {
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontFamily: 'Schyler',
+                                overflow: TextOverflow.ellipsis,
                                 fontSize: 15,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w200)),
@@ -50,13 +66,16 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.white,
                           thickness: 1,
                         ),
-                        Text(homeController.selectedValueTown.value,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontFamily: 'Schyler',
-                                fontSize: 15,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w200)),
+                        Flexible(
+                          child: Text(homeController.selectedValueTown.value,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontFamily: 'Schyler',
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w200)),
+                        ),
                       ],
                     ),
                   ),
@@ -163,8 +182,8 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Lottie.asset("assets/images/progress.json",
                               frameRate: FrameRate.max,
-                              height: Get.height/5.20666666667,
-                              width: Get.width/2.61333333333),
+                              height: Get.height / 5.20666666667,
+                              width: Get.width / 2.61333333333),
                         ],
                       )
                     : times()),

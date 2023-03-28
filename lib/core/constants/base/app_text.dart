@@ -1,5 +1,5 @@
 class AppTexts{
   static const morning="Günaydın";
-  static const afternoon="İyi Öğlenler";
-  static const evening="İyi Geceler";
+  static const afternoon="İyi Günler";
+  static const evening="İyi Akşamlar";
 }

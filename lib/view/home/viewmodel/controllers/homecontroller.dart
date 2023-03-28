@@ -48,11 +48,13 @@ class HomeController extends GetxController {
   }
 
   buildApp() async {
+    isloading.value =true;
     if (await BasicPref().getString("country") != "none") {
       selectedValueCountry.value = await BasicPref().getString("country");
       selectedValueTown.value = await BasicPref().getString("town");
       await getTimes();
     }
+       isloading.value =false;
   }
 
   getCities() async {
@@ -83,10 +85,10 @@ class HomeController extends GetxController {
 
   checkImageChange() {
     var time = DateTime.now().hour;
-    if (time >= 4 && time <= 12) {
+    if (time >= 4 && time < 12) {
       backImageUrl.value = AssetPaths.morning;
       message.value = AppTexts.morning;
-    } else if (time > 12 && time <= 17) {
+    } else if (time >= 12 && time <= 17) {
       backImageUrl.value = AssetPaths.afternoon;
       message.value = AppTexts.afternoon;
     } else {
